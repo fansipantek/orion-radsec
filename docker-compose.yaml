@@ -1,11 +1,19 @@
 version: "3.4"
 
 services:
-    frrsp:
-      image: frrsp
-      volumes:
-        - "./cert.pem:/etc/raddb/cert.pem"
-        - "./key.pem:/etc/raddb/key.pem"
-      ports:
-        - 1812/udp
-        - 1813/udp
+  orionrs:
+    image: orionrs
+    ports:
+      - 1812:1812/udp
+      - 1813:1813/udp
+    networks:
+      sto_vlan1:
+        ipv4_address: 192.168.5.12
+
+networks:
+  sto_vlan1:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.5.0/24
